@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 
+
+
 const consultaAgendadaSchema = new mongoose.Schema({
   usuarioId: {
     type: mongoose.Schema.Types.ObjectId,

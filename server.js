@@ -8,8 +8,7 @@ const port = 3000;
 
 app.use(express.json());
 
-mongoose
-  .connect("mongodb://localhost:27017", {
+mongoose.connect("mongodb://localhost:27017/loginDB", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })

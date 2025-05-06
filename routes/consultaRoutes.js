@@ -3,11 +3,25 @@ const express = require("express");
 const ConsultaAgendada = require("../models/ConsultaAgendada");
 
 const HistoricoConsulta = require("../models/HistoricoConsulta");
-
+const jwt = require("jsonwebtoken");
 const authMiddleware = require("../middleware/authMiddleware");
 const authenticate = require("../middleware/authMiddleware");
 
 const router = express.Router();
+
+function verificarToken(req, res, next) {
+  const authHeader = req.headers.authorization;
+  if (!authHeader) return res.status(401).json({ error: "Token não fornecido" });
+
+  const token = authHeader.split(" ")[1];
+  jwt.verify(token, "secreta", (err, decoded) => {
+    if (err) return res.status(403).json({ error: "Token inválido" });
+    req.userId = decoded.userId;
+    next();
+  });
+}
+
+
 
 router.get(
   "/agendadas/:usuarioId",
